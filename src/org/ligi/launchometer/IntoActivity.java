@@ -3,6 +3,7 @@ package org.ligi.launchometer;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,6 +18,8 @@ public class IntoActivity extends Activity {
 
         setContentView(R.layout.intro);
 
+        TextView tv=(TextView)findViewById(R.id.text);
+        tv.setText(Html.fromHtml(getString(R.string.intro)));
 
         Button exit_btn=(Button)findViewById(R.id.button_exit);
         Button next_btn=(Button)findViewById(R.id.button_start);
@@ -33,6 +36,7 @@ public class IntoActivity extends Activity {
             public void onClick(View v) {
                 Intent i=new Intent(IntoActivity.this,Launchometer.class);
                 startActivity(i);
+                i.putExtra("pos",0);
                 finish();
             }
         });
