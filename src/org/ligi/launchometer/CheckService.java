@@ -2,6 +2,7 @@ package org.ligi.launchometer;
 
 import android.app.ActivityManager;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.IBinder;
@@ -27,7 +28,18 @@ public class CheckService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return null;
+    }
+
+    private void killActivity(String pkg) {
+        Intent startMain = new Intent(Intent.ACTION_MAIN);
+        startMain.addCategory(Intent.CATEGORY_HOME);
+        startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(startMain);
+
+        //String pkg=getIntent().getStringExtra("pkg");
+        ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        am.killBackgroundProcesses(pkg);
     }
 
     class CheckAsyncTask extends AsyncTask<Void, Void, Void> {
@@ -37,10 +49,14 @@ public class CheckService extends Service {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            killActivity(package2start);
 
             Intent intent = new Intent(CheckService.this, ResultActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("time",(int)(System.currentTimeMillis()-start_time));
+
+
+
             startActivity(intent);
 
         }
