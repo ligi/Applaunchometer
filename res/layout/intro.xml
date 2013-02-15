@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              style="@android:style/TextAppearance.DeviceDefault.Large"
+              android:layout_gravity="center"
+              android:padding="10dp">
+
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dip"
+            android:layout_weight="1"
+            android:text="This game ( or measuring app ) is all about finding out how fast you can lanunch Apps on your System. You certainly will also discover apps again which you have installed but long forgotten. You will get 7 apps to you may launch as <b>fast as possible</b> any in any <b>way you like</b>"
+            android:layout_gravity="center"
+            android:id="@+id/text" style="@android:style/TextAppearance.DeviceDefault.Large"/>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:orientation="horizontal"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  style="@android:style/TextAppearance.DeviceDefault.Large"
+                  android:layout_gravity="center"
+                  android:padding="10dp">
+        <Button
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="exit"
+                android:id="@+id/button_exit"/>
+
+        <Button
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Start!"
+                android:id="@+id/button_start"/>
+
+    </LinearLayout>
+</LinearLayout>
+

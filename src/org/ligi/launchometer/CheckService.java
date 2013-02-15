@@ -42,27 +42,33 @@ public class CheckService extends Service {
         am.killBackgroundProcesses(pkg);
     }
 
-    class CheckAsyncTask extends AsyncTask<Void, Void, Void> {
+    class CheckAsyncTask extends AsyncTask<Void, Void, Boolean> {
 
         private long start_time;
 
         @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            killActivity(package2start);
+        protected void onPostExecute(Boolean res) {
+            super.onPostExecute(res);
 
-            Intent intent = new Intent(CheckService.this, ResultActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.putExtra("time",(int)(System.currentTimeMillis()-start_time));
+            if (res) {
+                killActivity(package2start);
 
+                Intent intent = new Intent(CheckService.this, ResultActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("time",(int)(System.currentTimeMillis()-start_time));
 
+                startActivity(intent);
+            } else {
 
-            startActivity(intent);
+                Intent intent = new Intent(CheckService.this, TimeoutActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
+                startActivity(intent);
+            }
         }
 
         @Override
-        protected Void doInBackground(Void... params) {
+        protected Boolean doInBackground(Void... params) {
             start_time=System.currentTimeMillis();
             ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
             while (true) {
@@ -71,9 +77,11 @@ public class CheckService extends Service {
 
                 for (ActivityManager.RunningAppProcessInfo rapi : runningAppProcesses) {
                     if (rapi.processName.equals(package2start))
-                        return null;
+                        return true;
                 }
 
+                if ((System.currentTimeMillis()-start_time)>30000)
+                    return false;
                 try {
                     Thread.sleep(50);
                 } catch (InterruptedException e) {
