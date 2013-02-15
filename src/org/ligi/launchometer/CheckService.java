@@ -70,15 +70,10 @@ public class CheckService extends Service {
         @Override
         protected Boolean doInBackground(Void... params) {
             start_time=System.currentTimeMillis();
-            ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+
             while (true) {
 
-                List<ActivityManager.RunningAppProcessInfo> runningAppProcesses = am.getRunningAppProcesses();
-
-                for (ActivityManager.RunningAppProcessInfo rapi : runningAppProcesses) {
-                    if (rapi.processName.equals(package2start))
-                        return true;
-                }
+                if (isPkgRunning(CheckService.this,package2start)) return true;
 
                 if ((System.currentTimeMillis()-start_time)>30000)
                     return false;
@@ -88,5 +83,17 @@ public class CheckService extends Service {
                 }
             }
         }
+    }
+
+    public static boolean isPkgRunning(Context ctx,String pkg) {
+        ActivityManager am = (ActivityManager) ctx.getSystemService(ACTIVITY_SERVICE);
+
+        List<ActivityManager.RunningAppProcessInfo> runningAppProcesses = am.getRunningAppProcesses();
+
+        for (ActivityManager.RunningAppProcessInfo rapi : runningAppProcesses) {
+            if (rapi.processName.equals(pkg))
+                return true;
+        }
+        return false;
     }
 }

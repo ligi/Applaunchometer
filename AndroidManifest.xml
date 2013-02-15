@@ -10,7 +10,7 @@
 
     <application android:label="@string/app_name" android:icon="@drawable/ic_launcher"
                  android:theme="@android:style/Theme.Holo.Dialog"
-            >
+                 android:name=".ApplicationContext">
         <activity android:name=".IntoActivity"
                   android:label="@string/app_name"
                   android:launchMode="singleInstance" >

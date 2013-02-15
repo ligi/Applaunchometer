@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class ResultActivity extends Activity {
+public class ResultActivity extends BaseActivity {
 
     private String package2start;
 
@@ -43,11 +43,14 @@ public class ResultActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent i=new Intent(ResultActivity.this,Launchometer.class);
+                getApp().pos++;
                 startActivity(i);
                 finish();
             }
         });
-        setTitle("Launch-O-Meter Result");
+
+
+        setTitle("Launch-O-Meter Step " + (getApp().pos+1)+"/7");
 
     }
 

@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class IntoActivity extends Activity {
+public class IntoActivity extends BaseActivity {
 
     private String package2start;
 
@@ -36,7 +36,10 @@ public class IntoActivity extends Activity {
             public void onClick(View v) {
                 Intent i=new Intent(IntoActivity.this,Launchometer.class);
                 startActivity(i);
-                i.putExtra("pos",0);
+
+                getApp().fouls=0;
+                getApp().pos=0;
+
                 finish();
             }
         });
