@@ -1,0 +1,3 @@
+[![Build Status](https://ligi.ci.cloudbees.com/job/Applaunchometer/badge/icon)](https://ligi.ci.cloudbees.com/job/Applaunchometer/)
+
+This game ( or measuring app ) is all about finding out how fast you can launch Apps on your System. You certainly will also discover apps again which you have installed but long forgotten. You will get 7 ( just to get rid of results of luck ) apps to you may launch as <b>fast as possible</b> any in any <b>way you like</b>
