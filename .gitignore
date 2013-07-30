@@ -1,3 +1,5 @@
+.gradle/
+build/
 bin/
 gen/
 module_gobandroid.xml  

@@ -1,0 +1,26 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.5.+'
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.6'
+}
+
+apply plugin: 'android'
+
+
+android {
+    compileSdkVersion 17
+    buildToolsVersion "17.0.0"
+
+    dependencies {
+        compile fileTree(dir: 'libs', include: '*.jar')
+    }
+}
+
+

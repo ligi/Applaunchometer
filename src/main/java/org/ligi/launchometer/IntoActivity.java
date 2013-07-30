@@ -1,36 +1,28 @@
 package org.ligi.launchometer;
 
 import android.app.Activity;
-import android.app.ActivityManager;
-import android.app.AlertDialog;
 import android.content.Intent;
-import android.content.pm.ResolveInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.Html;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.List;
-
-public class ResultActivity extends BaseActivity {
+public class IntoActivity extends BaseActivity {
 
     private String package2start;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.result);
+
+        setContentView(R.layout.intro);
 
         TextView tv=(TextView)findViewById(R.id.text);
-        int time = getIntent().getIntExtra("time", -1);
-        double apps_p_s=60000.0/time;
-        tv.setText("Yea you launched the App in "+ time/1000 +"."+ Math.abs(time) %1000+"s  - thats " +String.format("%.2f",  apps_p_s) +"Apps/min");
+        tv.setText(Html.fromHtml(getString(R.string.intro)));
 
         Button exit_btn=(Button)findViewById(R.id.button_exit);
-        Button next_btn=(Button)findViewById(R.id.button_next);
+        Button next_btn=(Button)findViewById(R.id.button_start);
 
         exit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,15 +34,16 @@ public class ResultActivity extends BaseActivity {
         next_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i=new Intent(ResultActivity.this,Launchometer.class);
-                getApp().pos++;
+                Intent i=new Intent(IntoActivity.this,Launchometer.class);
                 startActivity(i);
+
+                getApp().reset();
+
                 finish();
             }
         });
 
-
-        setTitle("Launch-O-Meter Step " + (getApp().pos+1)+"/7");
+        setTitle("Launch-O-Meter Intro");
 
     }
 

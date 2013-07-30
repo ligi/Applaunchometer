@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.IBinder;
-import android.util.Log;
 
 import java.util.List;
 
@@ -19,10 +18,26 @@ public class CheckService extends Service {
 
     private String package2start;
 
+    public static boolean isPkgRunning(Context ctx, String pkg) {
+        ActivityManager am = (ActivityManager) ctx.getSystemService(ACTIVITY_SERVICE);
+
+        List<ActivityManager.RunningAppProcessInfo> runningAppProcesses = am.getRunningAppProcesses();
+
+        for (ActivityManager.RunningAppProcessInfo rapi : runningAppProcesses) {
+            if (rapi.processName.equals(pkg))
+                return true;
+        }
+        return false;
+    }
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        package2start=intent.getStringExtra("package2start");
-        new CheckAsyncTask().execute();
+        if (intent != null) {
+            // TODO investigate why this can happen - not sure about this, but have seen this problem
+
+            package2start = intent.getStringExtra("package2start");
+            new CheckAsyncTask().execute();
+        }
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -37,7 +52,6 @@ public class CheckService extends Service {
         startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(startMain);
 
-        //String pkg=getIntent().getStringExtra("pkg");
         ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         am.killBackgroundProcesses(pkg);
     }
@@ -55,7 +69,7 @@ public class CheckService extends Service {
 
                 Intent intent = new Intent(CheckService.this, ResultActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("time",(int)(System.currentTimeMillis()-start_time));
+                intent.putExtra("time", (int) (System.currentTimeMillis() - start_time));
 
                 startActivity(intent);
             } else {
@@ -69,13 +83,13 @@ public class CheckService extends Service {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            start_time=System.currentTimeMillis();
+            start_time = System.currentTimeMillis();
 
             while (true) {
 
-                if (isPkgRunning(CheckService.this,package2start)) return true;
+                if (isPkgRunning(CheckService.this, package2start)) return true;
 
-                if ((System.currentTimeMillis()-start_time)>30000)
+                if ((System.currentTimeMillis() - start_time) > AppDefinitions.TIMEOUT)
                     return false;
                 try {
                     Thread.sleep(50);
@@ -83,17 +97,5 @@ public class CheckService extends Service {
                 }
             }
         }
-    }
-
-    public static boolean isPkgRunning(Context ctx,String pkg) {
-        ActivityManager am = (ActivityManager) ctx.getSystemService(ACTIVITY_SERVICE);
-
-        List<ActivityManager.RunningAppProcessInfo> runningAppProcesses = am.getRunningAppProcesses();
-
-        for (ActivityManager.RunningAppProcessInfo rapi : runningAppProcesses) {
-            if (rapi.processName.equals(pkg))
-                return true;
-        }
-        return false;
     }
 }

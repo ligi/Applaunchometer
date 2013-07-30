@@ -19,17 +19,17 @@ public class TimeoutActivity extends BaseActivity {
         Button exit_btn=(Button)findViewById(R.id.button_exit);
         Button next_btn=(Button)findViewById(R.id.button_next);
 
+        Button share_btn = (Button) findViewById(R.id.button_share);
+        share_btn.setVisibility(View.GONE);
+
         TextView tv=(TextView)findViewById(R.id.text);
 
         tv.setText("You took too long to launch the App - perhaps you where distracted or screwed up in another way - or I screwed up detecting an app launch - let's not point fingers here - we know stuff like this can happen - you are allowed to have 2 fouls in one session");
         getApp().fouls++;
 
         if (getApp().fouls==AppDefinitions.MAX_FOULS) {
-            getApp().fouls=0;
-            getApp().pos=0;
-
+            getApp().reset();
             next_btn.setText(getString(R.string.restart));
-
         }
 
         exit_btn.setOnClickListener(new View.OnClickListener() {
@@ -50,7 +50,6 @@ public class TimeoutActivity extends BaseActivity {
         });
 
         setTitle("Launch-O-Meter Timeout " + getApp()+"/"+AppDefinitions.MAX_FOULS );
-
     }
 
 }

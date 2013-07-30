@@ -15,6 +15,12 @@
             android:text="test"
             android:layout_gravity="center"
             android:id="@+id/text" style="@android:style/TextAppearance.DeviceDefault.Large"/>
+    <Button
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:text="Share your result"
+    android:id="@+id/button_share"/>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                   android:orientation="horizontal"

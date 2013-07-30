@@ -30,11 +30,9 @@ public class Launchometer extends Activity {
         while(activity2start_ri==null || CheckService.isPkgRunning(this,activity2start_ri.activityInfo.packageName))
             activity2start_ri = allresolveInfoList.get((int) (Math.random() * allresolveInfoList.size()));
 
-
         String label = activity2start_ri.loadLabel(getPackageManager()).toString() + " ";
         package2start = activity2start_ri.activityInfo.packageName;
         iv.setImageDrawable(activity2start_ri.loadIcon(getPackageManager()));
-
 
         tv.setText(label);
 
@@ -42,7 +40,6 @@ public class Launchometer extends Activity {
         Intent i=(new Intent(this,CheckService.class));
         i.putExtra("package2start",package2start);
         startService(i);
-
     }
 
     @Override
@@ -50,10 +47,6 @@ public class Launchometer extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         setTitle("Launch-O-Meter");
-
-
     }
-
-
 
 }

@@ -10,4 +10,5 @@ public class AppDefinitions {
     public final static int STEPS=7;
     public final static int MAX_FOULS=2;
 
+    public final static int TIMEOUT=20000;
 }
