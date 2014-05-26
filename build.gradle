@@ -18,8 +18,14 @@ android {
         compile fileTree(dir: 'libs', include: '*.jar')
     }
 
+
     lintOptions {
-       abortOnError false
+        disable "NewApi"
+        disable "ExportedReceiver"
+        disable "HardcodedText"
+        disable "IconLocation"
+        disable "ContentDescription"
+        disable "UseCompoundDrawables"
     }
 }
 
